@@ -76,8 +76,8 @@ const Feed = () => {
   const fetchPosts = async () => {
     try {
       const response = await axios.get('/api/prompt')
-      console.log(response.data, "response.data");
-      console.log(response, "response");
+      // console.log(response.data, "response.data");
+      // console.log(response, "response");
       setAllPosts(response.data);
     }
     catch (error) {

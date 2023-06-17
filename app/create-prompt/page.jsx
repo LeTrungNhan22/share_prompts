@@ -31,7 +31,7 @@ const CreatePromptScreen = () => {
                     tag: post.tag,
                 }),
             })
-            console.log(response);
+            // console.log(response);
             if (response.ok) {
                 router.push("/");
                 toast.success("Prompt created successfully");
