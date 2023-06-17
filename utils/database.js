@@ -18,7 +18,7 @@ export const connectToDB = async () => {
     mongoose.set('strictQuery', true);
 
     if (isConnected) {
-        console.log('=> Using existing database connection');
+        console.log('=> database is already connected');
         return;
     }
 
@@ -27,10 +27,10 @@ export const connectToDB = async () => {
             dbName: process.env.DB_NAME || 'test',
             useNewUrlParser: true,
             useUnifiedTopology: true,
-        }).then(() => {
-            isConnected = true;
-            console.log(`=> Connected to database ${process.env.DB_NAME} successfully`);
-        });
+        })
+        isConnected = true;
+
+        console.log('=> database connected successfully');
 
     } catch (error) {
         console.log('=> Error connecting to database: ', error);

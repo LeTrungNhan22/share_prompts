@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const ProfileScreen = () => {
     const { data: session } = useSession();
@@ -31,7 +32,7 @@ const ProfileScreen = () => {
             try {
                 await fetch(`/api/prompt/${post._id}`, {
                     method: "DELETE",
-                });
+                }).then(() => toast.success("Post deleted!"));
                 const filteredPosts = posts.filter((p) => p._id !== post._id);
                 setPosts(filteredPosts);
             } catch (error) {

@@ -1,5 +1,6 @@
 import React from 'react'
 import Feed from '@components/Feed'
+import { connectToDB } from "@utils/database"
 
 const Home = () => {
     return (

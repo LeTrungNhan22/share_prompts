@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import PromptCard from "./PromptCard";
 import PromptCardSkeleton from "./PromptCardSkeleton ";
+import axios from "axios";
 
 
 const PromptCardList = ({ data, handleTagClick, searchText }) => {
@@ -62,30 +63,31 @@ const PromptCardList = ({ data, handleTagClick, searchText }) => {
 const Feed = () => {
 
   const [allPosts, setAllPosts] = useState([]);
-
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [searchTimeout, setSearchTimeout] = useState(null);
 
-  // filter prompts
-  const fetchPosts = async () => {
-    const response = await fetch('/api/prompt', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      cache: 'no-cache',
-    });
-    const data = await response.json();
-    setAllPosts(data);
-  }
 
   useEffect(() => {
     fetchPosts();
   }, []);
 
+
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get('/api/prompt')
+      console.log(response.data, "response.data");
+      console.log(response, "response");
+      setAllPosts(response.data);
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+
   const filterPrompts = (searchTextInput) => {
-    const regex = new RegExp(searchTextInput, "gi"); // 'i' flag for case-insensitive search
+    const regex = new RegExp(searchTextInput, "gi"); // 'i' flag for case-insensitive search// 'g' flag for global search
     return allPosts.filter(
       (item) =>
         regex.test(item.creator.username) ||

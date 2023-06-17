@@ -20,13 +20,16 @@ const handler = NextAuth({
         GoogleProvider({
             clientId: process.env.GOOGLE_ID,
             clientSecret: process.env.GOOGLE_SECRET,
+
         }),
     ],
     callbacks: {
         async session({ session }) {
+            await connectToDB();
             const sessionUser = await User.findOne({ email: session.user.email });
             session.user.id = sessionUser?._id; // add id to session
             return session;
+
         },
         async signIn({ profile, account, user }) {
             try {
